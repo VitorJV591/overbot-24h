@@ -2,9 +2,8 @@ import discord, os
 from discord.ext import commands
 
 intents = discord.Intents.default()
-intents.message_content = True # ESSA LINHA PRECISA ESTAR AQUI!
+intents.message_content = True
 intents.guilds = True
-intents.members = True 
 
 bot = commands.Bot(command_prefix='!', intents=intents, case_insensitive=True)
 
@@ -17,16 +16,11 @@ async def avatar(ctx, member: discord.Member = None):
     member = member or ctx.author
     await ctx.send(member.avatar.url)
 
+# AQUI ESTÁ A LINHA PULADA ABAIXO
 @bot.command()
-async def comandos(ctx):
-    await ctx.send("📜 Comandos ativos: !avatar, !reformar, !limpar")
-
-@bot.command()
-async def reformar(ctx):
-    await ctx.send("🧹 *Limpando tudo...*")
-    for canal in ctx.guild.channels:
-        try: await canal.delete()
-        except: continue
-    await ctx.guild.create_text_channel("💬-geral")
+@commands.has_permissions(manage_messages=True)
+async def limpar(ctx, quantidade: int):
+    await ctx.channel.purge(limit=quantidade + 1)
+    await ctx.send(f"🧹 Limpei {quantidade} mensagens!", delete_after=5)
 
 bot.run(os.getenv('DISCORD_TOKEN'))
