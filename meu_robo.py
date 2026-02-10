@@ -43,4 +43,4 @@ async def reformar(ctx):
     await final.send("🔥 *TUDO PRONTO!* Servidor limpo e organizado.")
 
 # COLE O TOKEN INTEIRO DENTRO DAS ASPAS ABAIXO
-bot.run('MTQ3MDY0MTU3NzE2MzQ4OTQ1MQ.GerVAP.0Gx1CTqyCzaK8_Lbt1ZYGxS0tBmRoLOnlFgk5w')
+bot.run(os.getenv('DISCORD_TOKEN'))
